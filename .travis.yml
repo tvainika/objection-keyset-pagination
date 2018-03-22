@@ -1,10 +1,10 @@
 language: node_js
 
 node_js:
-  - '6'
+#  - '6'
   - '8'
-  - 'lts/*'
-  - 'node'
+#  - 'lts/*'
+#  - 'node'
 
 cache:
   directories:
@@ -14,4 +14,5 @@ services:
   - postgresql
 
 before_script:
-  - psql -c 'create database keysetpaging_test;' -U postgres
+  - psql -c "CREATE DATABASE keysetpaging_test;" -U postgres
+  - psql -c "CREATE USER keyset WITH password 'no-offset';" -U postgres

@@ -1,4 +1,10 @@
+[![Build Status](https://travis-ci.org/tvainika/objection-keyset-pagination.svg?branch=master)](https://travis-ci.org/tvainika/objection-keyset-pagination)
+
 # objection-keyset-pagination
+
+Objection-keyset-pagination is a plugin to [Objection.js](https://vincit.github.io/objection.js) ORM to implement keyset based pagination, also known as cursor pagination.
+
+Keyset pagination requires having strict ordering of records. On the user interface side, keyset pagination goes well with infinite scroll elements. Keyset pagination provides stable results. Next batch of records always continues from the last record of previous batch even if there would be insertion or deletions between queries. Using dummy numbered pages such as Objection.js' own `.page()` or `OFFSET` in SQL, then insertion or deletion causes some records omitted or duplicated.
 
 <a href="https://use-the-index-luke.com/no-offset">
    <img src="https://use-the-index-luke.com/static/no-offset-banner-468x60.NsC5gHrT.png" width="468" height="60"
@@ -41,7 +47,7 @@ const keysetPagination = require('objection-keyset-pagination')({
 
 ## Usage
 
-Query with `.keysetPage()` to fetch first batch of rows and the keyset. Then later fetch next batch of rows starting from the keyset. The keyset is a simple JSON object, which can be easily passed around.
+Query with `.keysetPage()` to fetch first batch of rows and the keyset. Then later fetch next batch of rows starting from the keyset. The keyset is a plain old JS object, which can be easily passed around in JSON serialization.
 
 ```js
 const result1 = await Person

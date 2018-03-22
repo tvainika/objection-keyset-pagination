@@ -40,7 +40,7 @@ module.exports = options => {
 
   return Model => {
     class KeysetPaginationQueryBuilder extends Model.QueryBuilder {
-      cursor(keyset, reversed) {
+      _cursor(keyset, reversed) {
         const keysetColumns = [];
         this.forEachOperation('orderBy', function(op, i) {
           keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);
@@ -102,6 +102,12 @@ module.exports = options => {
 
         return this;
       };
+      keysetPage(keyset) {
+        return this._cursor(keyset);
+      }
+      previousKeysetPage(keyset) {
+        return this._cursor(keyset, true);
+      }
     }
 
     return class extends Model {

@@ -105,7 +105,7 @@ describe('example plugin tests', () => {
 
     return query.clone()
       .limit(5)
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(29);
         expect(result.results.length).to.equal(5);
@@ -113,7 +113,7 @@ describe('example plugin tests', () => {
 
         return query.clone()
           .limit(5)
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.equal(29);
@@ -136,14 +136,14 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(29);
         expect(result.results.length).to.equal(10);
         expect(result.results).to.eql(allRows.slice(0, 10));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.equal(29);
@@ -166,14 +166,14 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.be.an('undefined');
         expect(result.results.length).to.equal(8);
         expect(result.results).to.eql(allRows.slice(0, 8));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.be.an('undefined');
@@ -197,13 +197,13 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.results.length).to.equal(2);
         expect(result.results).to.eql(allRows.slice(0, 2));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(2);
@@ -226,41 +226,41 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.results.length).to.equal(5);
         expect(result.results).to.eql(allRows.slice(0, 5));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(5);
         expect(result.results).to.eql(allRows.slice(5, 10));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(4);
         expect(result.results).to.eql(allRows.slice(10));
 
         return query.clone()
-          .cursor(result.keyset, true); // reverse
+          .previousKeysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(5);
         expect(result.results).to.eql(allRows.slice(5, 10).reverse());
 
         return query.clone()
-          .cursor(result.keyset, true); // reverse
+          .previousKeysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(5);
         expect(result.results).to.eql(allRows.slice(0, 5).reverse());
 
         return query.clone()
-          .cursor(result.keyset, true); // reverse
+          .previousKeysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(0);
@@ -282,14 +282,14 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(29);
         expect(result.results.length).to.equal(10);
         expect(result.results).to.eql(allRows.slice(0, 10));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.equal(29);
@@ -313,14 +313,14 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(29);
         expect(result.results.length).to.equal(10);
         expect(result.results).to.eql(allRows.slice(0, 10));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.equal(29);
@@ -346,35 +346,35 @@ describe('example plugin tests', () => {
     const allRows = await query.clone();
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(159);
         expect(result.results.length).to.equal(60);
         expect(result.results).to.eql(allRows.slice(0, 60));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(60);
         expect(result.results).to.eql(allRows.slice(60, 120));
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(39);
         expect(result.results).to.eql(allRows.slice(120));
 
         return query.clone()
-          .cursor(result.keyset, true);
+          .previousKeysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(60);
         expect(result.results).to.eql(allRows.slice(60, 120).reverse());
 
         return query.clone()
-          .cursor(result.keyset, true);
+          .previousKeysetPage(result.keyset);
       })
       .then(result => {
         expect(result.results.length).to.equal(60);
@@ -394,13 +394,13 @@ describe('example plugin tests', () => {
           .where('firstname', 'Elisabeth');
 
     return query.clone()
-      .cursor()
+      .keysetPage()
       .then(result => {
         expect(result.total).to.equal(0);
         expect(result.results.length).to.equal(0);
 
         return query.clone()
-          .cursor(result.keyset);
+          .keysetPage(result.keyset);
       })
       .then(result => {
         expect(result.total).to.equal(0);

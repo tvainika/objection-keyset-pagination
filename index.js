@@ -82,22 +82,27 @@ module.exports = options => {
           }
         }
 
-        this.runAfter(async (models, queryBuilder) => {
+        this.runAfter((models, queryBuilder) => {
           const getCursorKey = args => filterKeysetColumns(args, keysetColumns);
           const keyset = models.length > 0
                 ? {first: getCursorKey(models[reversed ? (models.length-1) : 0]),
                    last: getCursorKey(models[reversed ? 0 : (models.length-1)])}
                 : undefined;
 
-          let result = {
+          if (this.resultSizeBuilder)
+            return this.resultSizeBuilder.resultSize().then(
+              resultSize => {
+                return {
+                  results: models,
+                  keyset,
+                  total: parseInt(resultSize , 10)
+                };
+              });
+
+          return {
             results: models,
             keyset
           };
-
-          if (this.resultSizeBuilder)
-            result.total = parseInt(await this.resultSizeBuilder.resultSize(), 10);
-
-          return result;
         });
 
         return this;

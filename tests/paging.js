@@ -73,7 +73,7 @@ module.exports = knex => {
         });
     });
 
-    it('should return .limit() rows per call with defaults', async () => {
+    it('should return .limit() rows per call with defaults', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -84,11 +84,16 @@ module.exports = knex => {
       const query = Person.query(knex)
             .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .limit(5)
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .limit(5)
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(5);
@@ -105,7 +110,7 @@ module.exports = knex => {
         });
     });
 
-    it('should limit rows per call with defaults', async () => {
+    it('should limit rows per call with defaults', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -116,10 +121,15 @@ module.exports = knex => {
       const query = Person.query(knex)
         .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(10);
@@ -135,7 +145,7 @@ module.exports = knex => {
         });
     });
 
-    it('should limit rows per call with given settings', async () => {
+    it('should limit rows per call with given settings', () => {
       const keysetPagination = keysetPaginationRequire({limit: 8, countTotal: false});
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -146,10 +156,15 @@ module.exports = knex => {
       const query = Person.query(knex)
         .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.be.an('undefined');
           expect(result.results.length).to.equal(8);
@@ -165,7 +180,7 @@ module.exports = knex => {
         });
     });
 
-    it('using other conditions in where', async () => {
+    it('using other conditions in where', () => {
       const keysetPagination = keysetPaginationRequire({limit: 2});
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -177,10 +192,15 @@ module.exports = knex => {
         .where('firstname', 'LIKE', 'J%')
         .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.results.length).to.equal(2);
           expect(result.results).to.eql(allRows.slice(0, 2));
@@ -194,7 +214,7 @@ module.exports = knex => {
         });
     });
 
-    it('there and back', async () => {
+    it('there and back', () => {
       const keysetPagination = keysetPaginationRequire({limit: 5});
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -206,10 +226,15 @@ module.exports = knex => {
         .where('firstname', 'LIKE', 'J%')
         .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.results.length).to.equal(5);
           expect(result.results).to.eql(allRows.slice(0, 5));
@@ -250,7 +275,7 @@ module.exports = knex => {
         });
     });
 
-    it('using two orderBy columns', async () => {
+    it('using two orderBy columns', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -262,10 +287,15 @@ module.exports = knex => {
             .orderBy('firstname')
             .orderBy('id');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(10);
@@ -281,7 +311,7 @@ module.exports = knex => {
             });
     });
 
-    it('using two orderBy columns, one descending order', async () => {
+    it('using two orderBy columns, one descending order', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
@@ -293,10 +323,15 @@ module.exports = knex => {
         .orderBy('firstname', 'Desc')
         .orderBy('id', 'ASC');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(10);
@@ -312,7 +347,7 @@ module.exports = knex => {
         });
     });
 
-    it('using four orderBy columns, desc,asc,asc,desc order', async () => {
+    it('using four orderBy columns, desc,asc,asc,desc order', () => {
       const keysetPagination = keysetPaginationRequire({limit: 60});
       class Number extends keysetPagination(Model) {
         static get tableName() {
@@ -326,10 +361,15 @@ module.exports = knex => {
         .orderBy('tens', 'asc')
         .orderBy('ones', 'desc');
 
-      const allRows = await query.clone();
+      let allRows;
 
       return query.clone()
-        .keysetPage()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
         .then(result => {
           expect(result.total).to.equal(159);
           expect(result.results.length).to.equal(60);

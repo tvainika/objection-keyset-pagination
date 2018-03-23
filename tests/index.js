@@ -96,6 +96,7 @@ describe('database tests', () => {
       });
 
       require('./paging')(knex);
+      require('./serialization')(knex);
     });
 
     return knex;

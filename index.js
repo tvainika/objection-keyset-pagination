@@ -40,7 +40,7 @@ module.exports = options => {
 
   return Model => {
     class KeysetPaginationQueryBuilder extends Model.QueryBuilder {
-      _cursor(keyset, reversed) {
+      keysetPage(keyset, reversed) {
         if (typeof keyset === 'string')
           keyset = JSON.parse(keyset);
         const keysetColumns = [];
@@ -109,11 +109,8 @@ module.exports = options => {
 
         return this;
       };
-      keysetPage(keyset) {
-        return this._cursor(keyset);
-      }
       previousKeysetPage(keyset) {
-        return this._cursor(keyset, true);
+        return this.keysetPage(keyset, true);
       }
     }
 

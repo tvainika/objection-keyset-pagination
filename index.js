@@ -86,24 +86,24 @@ module.exports = options => {
 
         this.runAfter((models, queryBuilder) => {
           const getCursorKey = args => filterKeysetColumns(args, keysetColumns);
-          const keyset = models.length > 0
+          const keysetNew = models.length > 0
                 ? {first: getCursorKey(models[reversed ? (models.length-1) : 0]),
                    last: getCursorKey(models[reversed ? 0 : (models.length-1)])}
-                : undefined;
+                : keyset;
 
           if (this.resultSizeBuilder)
             return this.resultSizeBuilder.resultSize().then(
               resultSize => {
                 return {
                   results: models,
-                  keyset,
+                  keyset: keysetNew,
                   total: parseInt(resultSize , 10)
                 };
               });
 
           return {
             results: models,
-            keyset
+            keyset: keysetNew
           };
         });
 

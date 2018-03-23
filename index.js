@@ -41,6 +41,8 @@ module.exports = options => {
   return Model => {
     class KeysetPaginationQueryBuilder extends Model.QueryBuilder {
       _cursor(keyset, reversed) {
+        if (typeof keyset === 'string')
+          keyset = JSON.parse(keyset);
         const keysetColumns = [];
         this.forEachOperation('orderBy', function(op, i) {
           keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);

@@ -11,8 +11,6 @@ var app = express();
 
 app.use('/primes', async function(req, res) {
   try {
-    console.log(req.query.cursor);
-    console.log(req.query);
     const primes = await Prime.query()
           .orderBy('id')
           .keysetPage(req.query.cursor);

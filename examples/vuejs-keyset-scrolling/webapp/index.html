@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Infinite Scroll with objection-keyset-pagination using Vue</title>
+</head>
+<body>
+  <div id="app">
+    <img src="https://vuejs.org/images/logo.png" alt="Vue logo">
+    <div class="prime-number-list">
+      <div class="list-item" v-for="prime in primes">
+        <span class="num" v-text="prime"></span>
+      </div>
+      <infinite-loading @infinite="infiniteHandler" ref="infiniteLoading">
+        <span slot="spinner">xxx</span>
+        <span slot="no-more">
+          There is no more prime numbers for now in database.
+        </span>
+      </infinite-loading>
+    </div>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>

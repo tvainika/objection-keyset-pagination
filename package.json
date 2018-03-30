@@ -17,11 +17,11 @@
   "license": "MIT",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "knex": "^0.13.0",
-    "mocha": "^3.4.1",
-    "objection": "^1.0.0",
+    "knex": "^0.14.4",
+    "mocha": "^3.5.3",
+    "objection": "^1.0.1",
     "pg": "^7.4",
-    "sqlite3": "^3.1.8"
+    "sqlite3": "^3.1.13"
   },
   "peerDependencies": {
     "objection": "*"

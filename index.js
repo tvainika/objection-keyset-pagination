@@ -1,6 +1,10 @@
 'use strict';
 
 function filterKeysetColumns(model, keysetColumns) {
+  // If only one keyset pagination column, use direct value as optimization
+  if (keysetColumns.length === 1)
+    return model[keysetColumns[0][0]];
+
   const result = {};
   keysetColumns.map(x => {
     result[x[0]] = model[x[0]];
@@ -64,10 +68,19 @@ module.exports = options => {
 
         // Check if cursor (seek position) is given, use that as WHERE condition
         if (keyset) {
-          const seekPosition = reversed ? keyset.first : keyset.last;
+          let seekPosition = reversed ? keyset.first : keyset.last;
           if (seekPosition) {
+
+            // Optimization for one key, see filterKeysetColumns for reverse operation
+            if (keysetColumns.length === 1) {
+              let col = keysetColumns[0];
+              var seekPositionNew = {};
+              seekPositionNew[col[0]] = seekPosition;
+              seekPosition = seekPositionNew;
+            }
+
             const missingColumns = keysetColumns.reduce((acc, col) => {
-              if (!(col[0] in seekPosition))
+              if (typeof seekPosition === 'object' && !(col[0] in seekPosition))
                 acc.push(col[0]);
               return acc;
             }, []);

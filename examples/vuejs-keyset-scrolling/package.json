@@ -8,7 +8,7 @@
     "express": "^4.16.3",
     "knex": "^0.14.4",
     "objection": "^1.0.1",
-    "objection-keyset-pagination": "^0.0.2",
+    "objection-keyset-pagination": "latest",
     "sqlite3": "^4.0.0",
     "vue": "^2.5.16",
     "vue-cli": "^2.9.3",

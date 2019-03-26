@@ -60,9 +60,9 @@ const result1 = await Person
 
 The models are returned in `result.results` just like with `.page()`.
 
-The keyset index columns are returned in `result.keyset`. Pass this back in the next query to fetch next batch of rows. This `keyset` contains 
+The keyset index columns are returned in `result.keyset`. Pass this back in the next query to fetch next batch of rows.
 
-The return value has `result.total` (unless **countTotal** was set to false) which contains **total** count of rows.
+If ***countTotal*** was set to true, then the return value also has `result.total` which contains **total** count of rows.
 
 The next batch of rows are fetched by passing `result.keyset` as parameter to `.keysetPage()`.
 

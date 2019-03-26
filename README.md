@@ -62,6 +62,8 @@ The models are returned in `result.results` just like with `.page()`.
 
 The keyset index columns are returned in `result.keyset`. Pass this back in the next query to fetch next batch of rows.
 
+If the query doesn't have `orderBy` clause, Model's `idColumn` will be used in ascending order.
+
 If ***countTotal*** was set to true, then the return value also has `result.total` which contains **total** count of rows.
 
 The next batch of rows are fetched by passing `result.keyset` as parameter to `.keysetPage()`.

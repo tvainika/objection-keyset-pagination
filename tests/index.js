@@ -16,6 +16,21 @@ function* personGenerator(start, end) {
   }
 }
 
+function* person2Generator(start, end) {
+  let i = start;
+
+  const firstnames = ['Jennifer', 'Sylvester', 'Tommy', 'John'];
+
+  while(i <= end) {
+    yield {id1: Math.floor(i / 10),
+           id2: i % 10,
+           firstname: firstnames[i % firstnames.length],
+           lastname: `Stallone`
+          };
+    i++;
+  }
+}
+
 function* numberGenerator(start, end, incr = 7) {
   let i = start;
 
@@ -71,6 +86,28 @@ describe('database tests', () => {
           .then(function () {
             // Inserts seed entries
             return knex('Person').insert([...personGenerator(1, 29)]);
+          });
+      });
+
+      before(() => {
+        return knex.schema.dropTableIfExists('Person2');
+      });
+
+      before(() => {
+        return knex.schema.createTable('Person2', table => {
+          table.integer('id1');
+          table.integer('id2');
+          table.string('firstname');
+          table.string('lastname');
+          table.primary(['id1', 'id2']);
+        });
+      });
+
+      before(() => {
+        return knex('Person2')
+          .then(function () {
+            // Inserts seed entries
+            return knex('Person2').insert([...person2Generator(1, 29)]);
           });
       });
 

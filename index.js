@@ -52,7 +52,14 @@ module.exports = options => {
           keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);
         });
         if (keysetColumns.length === 0) {
-          throw new Error('query must have at least one order by clause');
+          const idColumn = this.modelClass().idColumn;
+          this.orderBy(idColumn);
+          if (typeof idColumn === 'string')
+            keysetColumns.push([idColumn, 'asc']);
+          else
+            idColumn.map(col => {
+              keysetColumns.push([col, 'asc']);
+            });
         }
         if (reversed) {
           this.clear('orderBy');

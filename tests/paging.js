@@ -40,6 +40,81 @@ module.exports = knex => {
         });
     });
 
+    it('use idColumn if called without order by clause', () => {
+      const keysetPagination = keysetPaginationRequire();
+      class Person extends keysetPagination(Model) {
+        static get tableName() {
+          return 'Person';
+        }
+      }
+
+      const query = Person.query(knex);
+
+      let allRows;
+
+      return query.clone()
+        .orderBy('id')
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .limit(5)
+            .keysetPage();
+        })
+        .then(result => {
+          expect(result.total).to.be.undefined;
+          expect(result.results.length).to.equal(5);
+          expect(result.results).to.eql(allRows.slice(0, 5));
+
+          return query.clone()
+            .limit(5)
+            .keysetPage(result.keyset);
+        })
+        .then(result => {
+          expect(result.results.length).to.equal(5);
+          expect(result.results).to.eql(allRows.slice(5, 10));
+        });
+    });
+
+    it('use idColumn array if called without order by clause', () => {
+      const keysetPagination = keysetPaginationRequire();
+      class Person2 extends keysetPagination(Model) {
+        static get tableName() {
+          return 'Person2';
+        }
+        static get idColumn() {
+          return ['id1', 'id2'];
+        }
+      }
+
+      const query = Person2.query(knex);
+
+      let allRows;
+
+      return query.clone()
+        .orderBy(Person2.idColumn)
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .limit(5)
+            .keysetPage();
+        })
+        .then(result => {
+          expect(result.total).to.be.undefined;
+          expect(result.results.length).to.equal(5);
+          expect(result.results).to.eql(allRows.slice(0, 5));
+
+          return query.clone()
+            .limit(5)
+            .keysetPage(result.keyset);
+        })
+        .then(result => {
+          expect(result.results.length).to.equal(5);
+          expect(result.results).to.eql(allRows.slice(5, 10));
+        });
+    });
+
     it('should limit rows per call with defaults', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
@@ -357,23 +432,6 @@ module.exports = knex => {
           expect(result.total).to.equal(0);
           expect(result.results.length).to.equal(0);
         });
-    });
-
-    it('limit without order by', () => {
-      const keysetPagination = keysetPaginationRequire();
-      class Person extends keysetPagination(Model) {
-        static get tableName() {
-          return 'Person';
-        }
-      }
-      const query = Person.query(knex)
-            .limit(5);
-
-      expect(() => query.clone().keysetPage())
-        .to.throwException(e => {
-          expect(e).to.be.a(Error);
-          expect(e.message).to.be('query must have at least one order by clause');
-      });
     });
   });
 };

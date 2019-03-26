@@ -37,7 +37,7 @@ module.exports = options => {
   options = Object.assign(
     {
       limit: 10,
-      countTotal: true
+      countTotal: false
     },
     options
   );

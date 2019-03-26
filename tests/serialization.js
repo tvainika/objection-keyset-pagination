@@ -4,7 +4,7 @@ const keysetPaginationRequire = require('..');
 
 module.exports = knex => {
   it('keyset aka cursor serialization', () => {
-    const keysetPagination = keysetPaginationRequire({limit: 60});
+    const keysetPagination = keysetPaginationRequire({limit: 60, countTotal: true});
     class Number extends keysetPagination(Model) {
       static get tableName() {
         return 'Number';

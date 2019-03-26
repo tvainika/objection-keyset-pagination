@@ -26,7 +26,7 @@ module.exports = knex => {
             .keysetPage();
         })
         .then(result => {
-          expect(result.total).to.equal(29);
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(5);
           expect(result.results).to.eql(allRows.slice(0, 5));
 
@@ -35,7 +35,6 @@ module.exports = knex => {
             .keysetPage(result.keyset);
         })
         .then(result => {
-          expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(5);
           expect(result.results).to.eql(allRows.slice(5, 10));
         });
@@ -62,7 +61,6 @@ module.exports = knex => {
             .keysetPage();
         })
         .then(result => {
-          expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(10);
           expect(result.results).to.eql(allRows.slice(0, 10));
 
@@ -70,7 +68,6 @@ module.exports = knex => {
             .keysetPage(result.keyset);
         })
         .then(result => {
-          expect(result.total).to.equal(29);
           expect(result.results.length).to.equal(10);
           expect(result.results).to.eql(allRows.slice(10, 20));
         });
@@ -97,7 +94,7 @@ module.exports = knex => {
             .keysetPage();
         })
         .then(result => {
-          expect(result.total).to.be.an('undefined');
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(8);
           expect(result.results).to.eql(allRows.slice(0, 8));
 
@@ -105,7 +102,7 @@ module.exports = knex => {
             .keysetPage(result.keyset);
         })
         .then(result => {
-          expect(result.total).to.be.an('undefined');
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(8);
           expect(result.results).to.eql(allRows.slice(8, 16));
         });
@@ -228,7 +225,7 @@ module.exports = knex => {
             .keysetPage();
         })
         .then(result => {
-          expect(result.total).to.equal(29);
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(10);
           expect(result.results).to.eql(allRows.slice(0, 10));
 
@@ -236,7 +233,7 @@ module.exports = knex => {
             .keysetPage(result.keyset);
         })
             .then(result => {
-              expect(result.total).to.equal(29);
+              expect(result.total).to.be.undefined;
               expect(result.results.length).to.equal(10);
               expect(result.results).to.eql(allRows.slice(10, 20));
             });
@@ -264,7 +261,7 @@ module.exports = knex => {
             .keysetPage();
         })
         .then(result => {
-          expect(result.total).to.equal(29);
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(10);
           expect(result.results).to.eql(allRows.slice(0, 10));
 
@@ -272,14 +269,14 @@ module.exports = knex => {
             .keysetPage(result.keyset);
         })
         .then(result => {
-          expect(result.total).to.equal(29);
+          expect(result.total).to.be.undefined;
           expect(result.results.length).to.equal(10);
           expect(result.results).to.eql(allRows.slice(10, 20));
         });
     });
 
     it('using four orderBy columns, desc,asc,asc,desc order', () => {
-      const keysetPagination = keysetPaginationRequire({limit: 60});
+      const keysetPagination = keysetPaginationRequire({limit: 60, countTotal: true});
       class Number extends keysetPagination(Model) {
         static get tableName() {
           return 'Number';
@@ -337,7 +334,7 @@ module.exports = knex => {
     });
 
     it('empty result set', () => {
-      const keysetPagination = keysetPaginationRequire();
+      const keysetPagination = keysetPaginationRequire({countTotal: true});
       class Person extends keysetPagination(Model) {
         static get tableName() {
           return 'Person';

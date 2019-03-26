@@ -36,7 +36,7 @@ class Person extends keysetPagination(Model) {
 
 **limit:** The number of rows per request if not set. The limit can be also set per query with `.limit()`. Default value is 10.
 
-**countTotal:** Query total number of rows. Two queries must be performed to get the total count. Default value is true.
+**countTotal:** Query total number of rows.  Default value is false.  Second query will be performed to get the total count.
 
 The options can be provided by optional second argument when registering the plugin:
 

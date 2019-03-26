@@ -51,6 +51,9 @@ module.exports = options => {
         this.forEachOperation('orderBy', function(op, i) {
           keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);
         });
+        if (keysetColumns.length === 0) {
+          throw new Error('query must have at least one order by clause');
+        }
         if (reversed) {
           this.clear('orderBy');
           keysetColumns.map(op => {

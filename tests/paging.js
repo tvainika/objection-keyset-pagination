@@ -361,5 +361,22 @@ module.exports = knex => {
           expect(result.results.length).to.equal(0);
         });
     });
+
+    it('limit without order by', () => {
+      const keysetPagination = keysetPaginationRequire();
+      class Person extends keysetPagination(Model) {
+        static get tableName() {
+          return 'Person';
+        }
+      }
+      const query = Person.query(knex)
+            .limit(5);
+
+      expect(() => query.clone().keysetPage())
+        .to.throwException(e => {
+          expect(e).to.be.a(Error);
+          expect(e.message).to.be('query must have at least one order by clause');
+      });
+    });
   });
 };

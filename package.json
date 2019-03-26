@@ -1,6 +1,6 @@
 {
   "name": "objection-keyset-pagination",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Keyset pagination plugin for Objection.js. Also known as cursor pagination. Join the #NoOffset movement now!",
   "main": "index.js",
   "scripts": {

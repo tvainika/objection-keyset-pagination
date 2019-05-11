@@ -314,6 +314,41 @@ module.exports = knex => {
             });
     });
 
+    it('using two orderBy columns as array', () => {
+      const keysetPagination = keysetPaginationRequire();
+      class Person extends keysetPagination(Model) {
+        static get tableName() {
+          return 'Person';
+        }
+      }
+
+      const query = Person.query(knex)
+            .orderBy(['firstname', 'id']);
+
+      let allRows;
+
+      return query.clone()
+        .then(result => {
+          allRows = result;
+
+          return query.clone()
+            .keysetPage();
+        })
+        .then(result => {
+          expect(result.total).to.be.undefined;
+          expect(result.results.length).to.equal(10);
+          expect(result.results).to.eql(allRows.slice(0, 10));
+
+          return query.clone()
+            .keysetPage(result.keyset);
+        })
+            .then(result => {
+              expect(result.total).to.be.undefined;
+              expect(result.results.length).to.equal(10);
+              expect(result.results).to.eql(allRows.slice(10, 20));
+            });
+    });
+
     it('using two orderBy columns, one descending order', () => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {

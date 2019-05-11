@@ -48,8 +48,18 @@ module.exports = options => {
         if (typeof keyset === 'string')
           keyset = JSON.parse(keyset);
         const keysetColumns = [];
-        this.forEachOperation('orderBy', function(op, i) {
-          keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);
+        this.forEachOperation('orderBy', function(op) {
+          if (Array.isArray(op.args[0])) {
+            op.args[0].forEach(function (column, i) {
+              if (typeof column === 'string') {
+                keysetColumns.push([column, 'asc']);
+              } else {
+                keysetColumns.push([column.column, (column.order || 'asc').toLowerCase()]);
+              }
+            });
+          } else {
+            keysetColumns.push([op.args[0], (op.args && op.args[1] || 'asc').toLowerCase()]);
+          }
         });
         if (keysetColumns.length === 0) {
           const idColumn = this.modelClass().idColumn;

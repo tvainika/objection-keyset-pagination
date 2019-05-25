@@ -11,7 +11,7 @@
     "url": "https://github.com/tvainika/objection-keyset-pagination"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "author": "Tommi Vainikainen",
   "license": "MIT",

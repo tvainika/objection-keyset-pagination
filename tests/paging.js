@@ -8,7 +8,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -44,7 +44,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -80,7 +80,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person2 extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person2';
+          return 'person2';
         }
         static get idColumn() {
           return ['id1', 'id2'];
@@ -119,7 +119,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -152,7 +152,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire({limit: 8, countTotal: false});
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -187,7 +187,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire({limit: 2});
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -221,7 +221,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire({limit: 5});
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -282,7 +282,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -318,7 +318,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -353,7 +353,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire();
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
 
@@ -389,7 +389,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire({limit: 60, countTotal: true});
       class Number extends keysetPagination(Model) {
         static get tableName() {
-          return 'Number';
+          return 'number';
         }
       }
 
@@ -447,7 +447,7 @@ module.exports = knex => {
       const keysetPagination = keysetPaginationRequire({countTotal: true});
       class Person extends keysetPagination(Model) {
         static get tableName() {
-          return 'Person';
+          return 'person';
         }
       }
       const query = Person.query(knex)

@@ -70,11 +70,11 @@ describe('database tests', () => {
 
     describe(knexConfig.client, () => {
       before(() => {
-        return knex.schema.dropTableIfExists('Person');
+        return knex.schema.dropTableIfExists('person');
       });
 
       before(() => {
-        return knex.schema.createTable('Person', table => {
+        return knex.schema.createTable('person', table => {
           table.increments('id').primary();
           table.string('firstname');
           table.string('lastname');
@@ -82,19 +82,19 @@ describe('database tests', () => {
       });
 
       before(() => {
-        return knex('Person')
+        return knex('person')
           .then(function () {
             // Inserts seed entries
-            return knex('Person').insert([...personGenerator(1, 29)]);
+            return knex('person').insert([...personGenerator(1, 29)]);
           });
       });
 
       before(() => {
-        return knex.schema.dropTableIfExists('Person2');
+        return knex.schema.dropTableIfExists('person2');
       });
 
       before(() => {
-        return knex.schema.createTable('Person2', table => {
+        return knex.schema.createTable('person2', table => {
           table.integer('id1');
           table.integer('id2');
           table.string('firstname');
@@ -104,19 +104,19 @@ describe('database tests', () => {
       });
 
       before(() => {
-        return knex('Person2')
+        return knex('person2')
           .then(function () {
             // Inserts seed entries
-            return knex('Person2').insert([...person2Generator(1, 29)]);
+            return knex('person2').insert([...person2Generator(1, 29)]);
           });
       });
 
       before(() => {
-        return knex.schema.dropTableIfExists('Number');
+        return knex.schema.dropTableIfExists('number');
       });
 
       before(() => {
-        return knex.schema.createTable('Number', table => {
+        return knex.schema.createTable('number', table => {
           table.increments('id').primary();
           table.integer('thousands');
           table.integer('hundreds');
@@ -126,9 +126,9 @@ describe('database tests', () => {
       });
 
       before(() => {
-        return knex('Number')
+        return knex('number')
           .then(function () {
-            return knex('Number').insert([...numberGenerator(1, 1111)]);
+            return knex('number').insert([...numberGenerator(1, 1111)]);
           });
       });
 

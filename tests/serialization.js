@@ -7,7 +7,7 @@ module.exports = knex => {
     const keysetPagination = keysetPaginationRequire({limit: 60, countTotal: true});
     class Number extends keysetPagination(Model) {
       static get tableName() {
-        return 'Number';
+        return 'number';
       }
     }
 

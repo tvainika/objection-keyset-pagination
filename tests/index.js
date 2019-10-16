@@ -57,10 +57,11 @@ describe('database tests', () => {
     {
       client: 'postgres',
       connection: {
-        host: '127.0.0.1',
-        user: 'keyset',
-        password: 'no-offset',
-        database: 'keysetpaging_test'
+        host: process.env.POSTGRES_HOST || 'localhost',
+        port: process.env.POSTGRES_PORT || 5432,
+        user: process.env.POSTGRES_USER || 'keyset',
+        password: process.env.POSTGRES_PASSWORD || 'no-offset',
+        database: process.env.POSTGRES_DB || 'keysetpaging_test'
       }
     }
   ];
